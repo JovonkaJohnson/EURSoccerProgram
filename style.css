@@ -3,11 +3,24 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-
+  }
+ 
+  /* Remove scrollbar on phones */
+@media (max-width: 768px) {
+    html, body {
+      overflow-x: hidden;  /* prevents sideways scroll */
+      overflow-y: auto;    /* keeps vertical scrolling */
+      scrollbar-width: none; /* Firefox */
     
+    }
+  
+    body::-webkit-scrollbar {
+      display: none; /* Chrome, Safari */
+    }
   }
 
 body {
+    font-family: Arial, sans-serif;
     background: #fff9e2;
     display: flex;
     flex-direction: column;
@@ -77,6 +90,7 @@ body {
     display: flex;
     flex-direction:column;
     height: 0%;
+    cursor:pointer;
   }
   
   
@@ -101,11 +115,16 @@ body {
 .menu-btn:nth-child(7) { margin-left: -5%;   width: 70%; margin-top: 210%; }
 .menu-btn:nth-child(8) { margin-left: 15%;   width: 50%; }
 .menu-btn:nth-child(7) { 
-    transform: translate(-5%, -220%); width: 70%;
-     }
-  .menu-btn:nth-child(8) { 
-    transform: translate(15%, -1150%); width: 50%;
-     }
+  width: 70%; margin-top: 10%; }
+  .menu-btn:nth-child(8) {
+    margin-top: -65%;
+    width: 50%;
+    
+    /* Make the button unclickable */
+    pointer-events: none;
+    cursor: default; /* shows default cursor */
+    opacity: 1;      /* keep full opacity, optional */
+  }
   /* -----------------------
      Responsive widths
   ----------------------- */
@@ -167,3 +186,24 @@ body {
     display: inline-block;
     margin: 0;
 }
+
+.locked {
+    opacity: 0.8;
+    filter: grayscale(100%);
+    cursor: not-allowed;
+  }
+
+  /* Sporty float for unlocked button */
+@keyframes unlockFloat {
+    0%   { transform: scale(1) rotateZ(0deg); }
+    25%  { transform: scale(1.05) rotateZ(-2deg); }
+    50%  { transform: scale(1) rotateZ(2deg); }
+    75%  { transform: scale(1.03) rotateZ(-1deg); }
+    100% { transform: scale(1) rotateZ(0deg); }
+  }
+  
+  .unlocked-animation {
+    animation: unlockFloat 2.5s cubic-bezier(0.645, 0.045, 0.355, 1) infinite;
+    transform-origin: center center;
+    cursor: pointer;
+  }
