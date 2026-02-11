@@ -1,0 +1,169 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    
+  }
+
+body {
+    background: #fff9e2;
+    display: flex;
+    flex-direction: column;
+  
+}
+  
+ /* --------------------------
+   SECTION 1 – PARALLAX HERO
+-------------------------- */
+.hero-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    
+  }
+  
+  .parallax-wrapper {
+    position: relative;
+    width: 100%;
+    
+
+  }
+  
+  /* Background spans full width, touches Section 2 */
+  .bg {
+    position: relative;
+    width: 100%;
+    height: 0%;
+    display: block;
+    z-index: -99;
+ }
+  
+  /* Foreground layers stay contained in Section 1 */
+  .layer {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    left: 0;
+    top: 0;
+    object-fit: cover;
+    z-index: 1;
+  }
+  
+  .layer-1 { z-index: 2; top: 10%; }
+  .layer-2 { z-index: 3; top: 20%; }
+  .layer-3 { z-index: 4; top: 35%; }
+  
+  /* --------------------------
+   SECTION 2 – BUTTON MENU
+-------------------------- */
+.menu-boundary {
+    position: relative;
+    width: 80%;   
+    height: 0px;      
+    display: flex;
+    flex-direction: column; /* stack buttons vertically */
+    justify-content: flex-start; /* start from top, no spreading */
+    margin: 0 auto;    
+    margin-top: 240%; 
+    
+    z-index: 4;
+      }
+  
+  /* Vertical zig-zag container */
+  .menu-buttons {
+    display: flex;
+    flex-direction:column;
+    height: 0%;
+  }
+  
+  
+
+
+  
+  
+  
+ 
+  /* Zig-zag positioning */
+  .menu-btn:nth-child(odd) { align-self: flex-start; }
+  .menu-btn:nth-child(even) { align-self: flex-end; }
+  
+  /* Individual offsets */
+/* Individual offsets using margin instead of transform */
+.menu-btn:nth-child(1) { margin-left: 10%;  margin-top: -50%; }
+.menu-btn:nth-child(2) { margin: -10%;  margin-top: -40%;}
+.menu-btn:nth-child(3) { margin: -10%;  margin-top: -20%; }
+.menu-btn:nth-child(4) { margin-left: 0%; margin-top: -10%;   }
+.menu-btn:nth-child(5) { margin-left: -10%; margin-top: -40%; }
+.menu-btn:nth-child(6) { margin-left: 0%;   margin-top: -30%; }
+.menu-btn:nth-child(7) { margin-left: -5%;   width: 70%; margin-top: 210%; }
+.menu-btn:nth-child(8) { margin-left: 15%;   width: 50%; }
+.menu-btn:nth-child(7) { 
+    transform: translate(-5%, -220%); width: 70%;
+     }
+  .menu-btn:nth-child(8) { 
+    transform: translate(15%, -1150%); width: 50%;
+     }
+  /* -----------------------
+     Responsive widths
+  ----------------------- */
+  
+  /* ≥2560px */
+  @media (min-width: 2560px) { 
+    .menu-btn { width: 62%; } 
+  }
+  
+  /* 1440px–2559px */
+  @media (max-width: 2559px) and (min-width: 1440px) { 
+    .menu-btn { width: 62%; } 
+  }
+  
+  /* 1024px–1439px */
+  @media (max-width: 1439px) and (min-width: 1024px) { 
+    .menu-btn { width: 62%; } 
+  }
+  
+  /* 768px–1023px */
+  @media (max-width: 1023px) and (min-width: 768px) { 
+    .menu-btn { width: 62%; } 
+  }
+  
+  /* 425px–767px */
+  @media (max-width: 767px) and (min-width: 425px) { 
+    .menu-btn { width: 62%; } 
+  }
+  
+  /* 375px–424px */
+  @media (max-width: 424px) and (min-width: 375px) { 
+    .menu-btn { width: 62%; } 
+  }
+  
+  /* ≤374px */
+  @media (max-width: 374px) and (min-width: 0px) { 
+    .menu-btn { width: 62%; } 
+  }
+/* Keyframes for sporty floating card effect */
+@keyframes sportyFloat {
+    0%   { transform: rotateX(1deg)  rotateY(-2deg) rotateZ(-1deg) scale(1); }
+    15%  { transform: rotateX(-1deg) rotateY(1deg)  rotateZ(0deg)  scale(1.02); }
+    30%  { transform: rotateX(2deg)  rotateY(0deg)  rotateZ(1deg)  scale(1.01); }
+    45%  { transform: rotateX(0deg)  rotateY(-1deg) rotateZ(-1deg) scale(1.03); }
+    60%  { transform: rotateX(-1deg) rotateY(2deg)  rotateZ(0deg)  scale(1.02); }
+    75%  { transform: rotateX(1deg)  rotateY(-1deg) rotateZ(1deg)  scale(1.015); }
+    100% { transform: rotateX(0deg)  rotateY(0deg)  rotateZ(0deg)  scale(1); }
+}
+
+/* Floating animation class */
+.sporty-float {
+    animation: sportyFloat 2.5s cubic-bezier(0.645, 0.045, 0.355, 1) forwards;
+    transform-origin: center center;
+ }
+
+/* Keep buttons inline-block for animation */
+.menu-btn {
+    position: relative;
+    display: inline-block;
+    margin: 0;
+}
