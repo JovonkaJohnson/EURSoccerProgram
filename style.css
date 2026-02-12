@@ -8,8 +8,7 @@
   /* Remove scrollbar on phones */
 @media (max-width: 768px) {
     html, body {
-      overflow-x: hidden;  /* prevents sideways scroll */
-      overflow-y: auto;    /* keeps vertical scrolling */
+
       scrollbar-width: none; /* Firefox */
     
     }
