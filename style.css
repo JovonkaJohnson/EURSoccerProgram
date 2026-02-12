@@ -75,7 +75,7 @@ body {
 .menu-boundary {
     position: relative;
     width: 80%;   
-    height: 0px;      
+    height: auto;      
     display: flex;
     flex-direction: column; /* stack buttons vertically */
     justify-content: flex-start; /* start from top, no spreading */
@@ -89,7 +89,7 @@ body {
   .menu-buttons {
     display: flex;
     flex-direction:column;
-    height: 0%;
+    height: 0;
     cursor:pointer;
   }
   
@@ -117,9 +117,8 @@ body {
 .menu-btn:nth-child(7) { 
   width: 70%; margin-top: 10%; }
   .menu-btn:nth-child(8) {
-    margin-top: -65%;
-    width: 50%;
-    
+    width: 50%; margin-top: -60%;
+
     /* Make the button unclickable */
     pointer-events: none;
     cursor: default; /* shows default cursor */
