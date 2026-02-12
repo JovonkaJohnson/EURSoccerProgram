@@ -134,9 +134,9 @@ document.addEventListener("DOMContentLoaded", () => {
     overlay.style.display = "none";
   });
 
-  // Click final card button → go to page7
   finalBtn.addEventListener("click", () => {
-    window.location.href = "page7.html";
+    overlay.style.display = "none";
+    window.location.href = "index.html#final-section";
   });
 
   // Only update progress numbers; overlay stays hidden
@@ -170,25 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-window.addEventListener("load", () => {
 
-  if (window.location.hash) {
-
-    const target = document.querySelector(window.location.hash);
-
-    if (target) {
-
-      // Reset scroll to top first (prevents instant jump)
-      window.scrollTo(0, 0);
-
-      setTimeout(() => {
-        smoothScrollTo(target, 1500); // change speed here
-      }, 100);
-
-    }
-  }
-
-});
 
 function smoothScrollTo(target, duration) {
 
@@ -218,3 +200,14 @@ function smoothScrollTo(target, duration) {
 
   requestAnimationFrame(animation);
 }
+
+
+finalBtn.addEventListener("click", () => {
+  overlay.style.display = "none";
+
+  const target = document.getElementById("final-section");
+
+  setTimeout(() => {
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, 50);
+});
