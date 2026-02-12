@@ -102,9 +102,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const button7 = document.querySelector('[data-id="7"]');
-    if (button7) {
-      button7.classList.toggle("locked", done !== 6);
-    }
+if (button7) {
+  if (done === 6) {
+    button7.classList.remove("locked");
+    button7.classList.add("unlocked-animation"); // ADDED: floating animation
+  } else {
+    button7.classList.add("locked");
+    button7.classList.remove("unlocked-animation"); // REMOVE animation if locked
+  }
+}
   }
 
   if (progressBtn && overlay) {
