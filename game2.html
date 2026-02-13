@@ -331,18 +331,9 @@ html, body {
     position:fixed;
     inset:0;
     background:black;
-    z-index:990;
+    z-index:50;
     opacity:1;
     transition: opacity 1.5s ease-out;
-}
-#fadeScreen2 {
-    position: fixed;
-    inset: 0;
-    background: black;
-    z-index: 50;
-    opacity: 0;              /* start transparent */
-    transition: opacity 1.5s ease-in;
-    pointer-events: none;    /* clicks pass through until active */
 }
 
 /* CROWD BEHIND GOAL */
@@ -371,32 +362,13 @@ html, body {
 </head>
 
 <body>
-    <div id="fadeScreen"></div>
-<!-- TUTORIAL OVERLAY -->
-<div id="tutorialOverlay" style="
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.8);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    z-index:40;
-    flex-direction:column;
-    color:white;
-    text-align:center;
-    font-size:24px;
-    padding:20px;
-">
-    <h2>Kick the ball into the goal!</h2>
-    <p>Avoid the goalkeeper. Score 3 goals to unlock the celebration.</p>
-    <p style="margin-top:60px; font-size:12px;  color:rgb(149, 149, 149);">Tap anywhere to start</p>
-</div>
+
 <div id="gameArea">
     <div id="sky"></div>
     <div id="grass"></div>
 <!-- FADE IN OVERLAY -->
+<div id="fadeScreen"></div>
 
-<div id="fadeScreen2"></div>
 <!-- CROWD RECTANGLE -->
 <div id="crowd"></div>
     <div id="goal"></div>
@@ -420,7 +392,7 @@ html, body {
             <button id="closePopup">✕</button>
             <h3>Pause Menu</h3>
             <button id="returnHome">Return Home</button>
-            <button id="skipCelebration">Skip to Celebration</button>
+            <button id="skipCelebration">Go to Celebration</button>
         </div>
     </div>
 
@@ -430,16 +402,7 @@ html, body {
     <div id="goalHitbox" class="debug-hitbox"></div>
 
     <div id="msgText"></div>
-      <!--CHANGED THIS PART -->
-      <div id="winOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:35; align-items:center; justify-content:center;">
-        <!-- Canvas for confetti -->
-        <canvas id="confettiCanvas" style="position:absolute; inset:0; width:100%; height:100%; z-index:34;"></canvas>
-    
-        <div id="winPopup" style="width:300px; padding:25px; background:#fff; border-radius:15px; text-align:center; display:flex; flex-direction:column; gap:15px; z-index:35;">
-            <h3 style="font-size:24px; color:#222;">You did it! Now on to the celebration</h3>
-            <button id="goBtn" style="padding:14px; border:none; border-radius:10px; background:#4caf50; color:white; font-weight:bold; cursor:pointer; font-size:18px;">Go!</button>
-        </div>
-    </div>
+</div>
 
 <script>
     // ===== ELEMENTS =====
@@ -470,7 +433,7 @@ html, body {
     let keeperSpeedPx = 140;
     let score = 0;
     let lastTime = performance.now();
-    const KEEPER_SPEED_MULTIPLIER_PER_SCORE = .5; // 5% faster per goal
+    const KEEPER_SPEED_MULTIPLIER_PER_SCORE = 0.05; // 5% faster per goal
     const GOAL_HITBOX_SCALE = 0.7;
 
     function resetBall() {
@@ -494,7 +457,7 @@ html, body {
     msgText.textContent = text;
     msgText.style.color = color;
     msgText.style.opacity = 1;
-    animateCrowd();
+
     messageTimeoutId = setTimeout(() => {
         msgText.style.opacity = 0;
         messageTimeoutId = null;
@@ -541,7 +504,7 @@ html, body {
 
         keeper.style.left = keeperX + '%';
     }
-    let prevScore = 0; // track previous score
+
     function ballInsideGoalHitbox(ballRect, hitboxRect) {
         return (
             ballRect.right > hitboxRect.left &&
@@ -567,94 +530,18 @@ html, body {
         }
 
         if (ballInsideGoalHitbox(b, goalHB)) {
-    score++;
-    scoreDisplay.textContent = "Score: " + score;
-    keeperSpeedPx += 10;
+            score++;
+            keeperSpeedPx += 10;
+            scoreDisplay.textContent = "Score: " + score;
+            showMessage("GOAL!", "#33ff33", resetBall);
+            return;
+        }
 
-    if (score >= 3) {
-        isPaused = true;
-          document.getElementById('winOverlay').style.display = 'flex';
-          confettiAnimation();
-          document.getElementById('goBtn').onclick = () => {
-    fadeOutAndRedirect('end.html');
-};
-        return;
-    } else {
-        showMessage("GOAL!", "#33ff33", resetBall);
-    }
-    return;
-}
         if (ballY > 100) {
             showMessage("MISS!", "#ff3333", resetBall);
         }
     }
-    function confettiAnimation() {
-    const canvas = document.getElementById('confettiCanvas');
-    const ctx = canvas.getContext('2d');
 
-    // Match canvas to overlay size
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
-
-    const fireworks = [];
-
-    for (let i = 0; i < 10; i++) {
-        fireworks.push({
-            x: Math.random() * canvas.width,
-            y: canvas.height + Math.random() * 100,
-            speed: 5 + Math.random() * 3,
-            angle: -Math.PI / 2 + (Math.random() - 0.5) * 0.5,
-            color: `hsl(${Math.random() * 360},100%,50%)`,
-            exploded: false,
-            particles: []
-        });
-    }
-
-    function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        fireworks.forEach(fw => {
-            if (!fw.exploded) {
-                fw.x += Math.cos(fw.angle) * fw.speed;
-                fw.y += Math.sin(fw.angle) * fw.speed;
-                ctx.beginPath();
-                ctx.arc(fw.x, fw.y, 3, 0, Math.PI * 2);
-                ctx.fillStyle = fw.color;
-                ctx.fill();
-
-                if (fw.y < canvas.height / 2 || Math.random() < 0.02) {
-                    fw.exploded = true;
-                    for (let i = 0; i < 30; i++) {
-                        const angle = Math.random() * 2 * Math.PI;
-                        const speed = 2 + Math.random() * 3;
-                        fw.particles.push({
-                            x: fw.x,
-                            y: fw.y,
-                            vx: Math.cos(angle) * speed,
-                            vy: Math.sin(angle) * speed,
-                            r: 2 + Math.random() * 2,
-                            color: `hsl(${Math.random() * 360},100%,50%)`
-                        });
-                    }
-                }
-            } else {
-                fw.particles.forEach(p => {
-                    p.x += p.vx;
-                    p.y += p.vy;
-                    p.vy += 0.05; // gravity
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                    ctx.fillStyle = p.color;
-                    ctx.fill();
-                });
-            }
-        });
-
-        requestAnimationFrame(draw);
-    }
-
-    draw();
-}
     function updateHitboxes() {
         const b = ball.getBoundingClientRect();
         const k = keeper.getBoundingClientRect();
@@ -735,7 +622,8 @@ closePopupBtn.addEventListener('click', () => {
     skipCelebrationBtn.addEventListener('click', () => {
         window.location.href = "end.html";
     });
-    window.addEventListener('load', () => {
+    // FADE IN ON GAME START
+window.addEventListener('load', () => {
     const fade = document.getElementById('fadeScreen');
     setTimeout(() => {
         fade.style.opacity = 0;
@@ -744,41 +632,42 @@ closePopupBtn.addEventListener('click', () => {
         fade.style.display = 'none';
     }, 1600); // remove element after fade
 });
+
+// CROWD BOUNCE ON GOAL OR MISS
 function animateCrowd() {
     const crowd = document.getElementById('crowd');
     crowd.classList.remove('bounce'); // reset
     void crowd.offsetWidth; // trigger reflow
     crowd.classList.add('bounce');
 }
-function fadeOutAndRedirect(url) {
-    const fade = document.getElementById('fadeScreen2');
-    fade.style.display = 'block';   // make sure it’s visible
-    fade.style.opacity = 1;         // start fully black
 
-    // Trigger transition to opacity 0 → 1
-    requestAnimationFrame(() => {
-        fade.style.transition = 'opacity 1.5s ease-in';
-        fade.style.opacity = 1;      // fade to black
-    });
+// CALL THIS WHEN GOAL OR MISS
+function showMessage(text, color, callback) {
+    isPaused = true;
 
-    // Wait for the transition, then redirect
-    setTimeout(() => {
-        window.location.href = url;
-    }, 1500); // match transition duration
+    if (messageTimeoutId) {
+        clearTimeout(messageTimeoutId);
+        messageTimeoutId = null;
+    }
+
+    msgText.textContent = text;
+    msgText.style.color = color;
+    msgText.style.opacity = 1;
+
+    // CROWD ANIMATION
+    animateCrowd();
+
+    messageTimeoutId = setTimeout(() => {
+        msgText.style.opacity = 0;
+        messageTimeoutId = null;
+
+        if (!isMenuOpen) {
+            isPaused = false;
+        }
+
+        if (callback) callback();
+    }, 1900);
 }
-
-// ===== TUTORIAL HANDLER WITH DELAY =====
-const tutorialOverlay = document.getElementById('tutorialOverlay');
-isPaused = true; // pause game at start
-
-tutorialOverlay.addEventListener('click', () => {
-    tutorialOverlay.style.display = 'none'; // hide tutorial
-
-    // Optional: small delay before starting
-    setTimeout(() => {
-        isPaused = false; // resume game
-    }, 1000); // 1000ms = 1 second delay
-});
 </script>
 
 </body>

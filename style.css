@@ -19,7 +19,7 @@
   }
 
 body {
-    font-family: Arial, sans-serif;
+  font-family:'Poppins', sans-serif;
     background: #fff9e2;
     display: flex;
     flex-direction: column;
