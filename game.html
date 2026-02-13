@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Penalty Shooters Clone</title>
+<style>
+:root {
+  --green: #1fb24c;
+  --red: #be1e2d;
+}
+html {
+  min-height: 100vh;
+  display: grid;
+  background: black;
+  font-family: system-ui;
+  text-align: center;
+  font-size: .75rem;
+}
+body {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: 
+    linear-gradient(to right, black 57px, transparent 57px calc(100% - 57px), black calc(100% - 57px)),
+    linear-gradient(to bottom, black 450px, var(--green) 450px);
+}
+h1 {
+  font-size: 10rem;
+  margin: 0;
+  position: absolute;
+  font-weight: 900;
+  color: gold;
+  text-shadow: 5px 5px black;
+  left: 50%;
+  top: 30%;
+  transform: translate(-50%,-50%);
+  opacity: 0;
+  pointer-events: none;
+  user-select: none;
+}
+#failure {
+  color: var(--red) !important;
+}
+.show_result {
+  transition: .75s;
+  transition-delay: 1s;
+  opacity: 1;
+}
+#game_field {
+  width: 100vw;
+  max-width: 1200px;
+  height: 450px;
+  background: url('https://contentservice.mc.reyrey.net/image_v1.0.0/?id=26107e19-02ae-5a04-bc21-88b57bc22ced&638600304193604811');
+  position: relative;
+  background-position: 50% 0%;
+  background-repeat: no-repeat;
+  margin: 0 auto;
+}
+#goal {
+  height: 250px;
+  aspect-ratio: 2/1;
+  margin: 0 auto;
+  background: url('https://contentservice.mc.reyrey.net/image_v1.0.0/?id=f4278541-20df-568f-baea-e387ee22937c&638600307412335028');
+  background-size: 100% 100% !important;
+  box-sizing: border-box;
+  cursor: crosshair;
+  position: absolute;
+  left: calc(50% - 250px);
+  top: 30px;
+  animation: shake .25s linear infinite;
+  transform-origin: 50% 100%;
+}
+@keyframes shake {
+  25% { transform: rotate(1deg); }
+  75% { transform: rotate(-1deg); }
+}
+.hitbox {}
+.hitbox[box="0"] { width:175px; height:125px; position:absolute; left:0; bottom:0; }
+.hitbox[box="1"] { width:175px; height:125px; position:absolute; left:0; top:0; }
+.hitbox[box="2"] { width:140px; height:175px; position:absolute; left:calc(50% - 70px); top:0; }
+.hitbox[box="3"] { width:175px; height:125px; position:absolute; right:0; top:0; }
+.hitbox[box="4"] { width:175px; height:125px; position:absolute; right:0; bottom:0; }
+#ball {
+  --ani: roll 1s linear infinite;
+  width: 40px;
+  aspect-ratio: 1/1;
+  background-size: 100% 100%;
+  border-radius: 50%;
+  position: absolute;
+  top: calc(100% - 50px);
+  left: calc(50% - 20px);
+  pointer-events: none;
+}
+#ball:before {
+  content: '';
+  width: 40px;
+  aspect-ratio: 1/1;
+  background-size: 100% 100%;
+  border-radius: 50%;
+  position: absolute;
+  left: 0%;
+  top: 50%;
+  mix-blend-mode: multiply;
+}
+#ball:after {
+  content: '';
+  width: 40px;
+  aspect-ratio: 1/1;
+  background: url('http://upload.wikimedia.org/wikipedia/en/e/ec/Soccer_ball.svg');
+  background-size: 100% 100%;
+  border-radius: 50%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+@keyframes roll { 100% { transform: rotate(1080deg); } }
+.kicked:after { animation: var(--ani); }
+.fall { animation: fall .5s linear .5s forwards; }
+@keyframes fall { 100% { top: 250px; } }
+.goal { animation: score .5s linear .5s forwards; }
+@keyframes score { 100% { top: 200px; } }
+</style>
+</head>
+<body>
+
+<div id='game_field'>
+  <div id='goal'>
+    <div class='hitbox' box="0"></div>
+    <div class='hitbox' box="1"></div>
+    <div class='hitbox' box="2"></div>
+    <div class='hitbox' box="3"></div>
+    <div class='hitbox' box="4"></div>
+  </div>
+  <div id='ball'></div>
+  <svg viewBox="0 0 10 10" id="svg" xmlns="http://www.w3.org/2000/svg">
+    <path id="path" d="M 10 10 C 20 20, 40 20, 50 10" stroke="rgba(0,0,0,0)" fill="transparent"/>
+    <circle id='circle' r="5" fill="rgba(255,0,0,0)">
+      <animateMotion
+        id="bally"
+        dur="1s"
+        repeatCount="1"
+        begin="goal.click"
+        fill="freeze"
+        path="M20,50 C20,-50 180,150 180,50 C180-50 20,150 20,50 z" />
+    </circle>
+  </svg>
+  <h1 id='success'>GOAL!</h1>
+  <h1 id='failure'>FAIL</h1>
+</div>
+<p>Click inside the goal to kick, then move cursor to curve shot.</p>
+<select id="difficulty">
+  <option value="easy">Easy</option>
+  <option value="medium">Medium</option>
+  <option value="hard">Hard</option>
+</select>
+
+<script>
+let offset = 20,
+    gf = game_field.getBoundingClientRect(),
+    b = ball.getBoundingClientRect(),
+    ooo = gf.x - offset,
+    gfcx = gf.x + (gf.width*.5) - ooo,
+    goalie = [
+      'https://contentservice.mc.reyrey.net/image_v1.0.0/?id=4d2c276a-53d1-5d61-973a-43e438e4d242&638600308304985475',
+      'https://contentservice.mc.reyrey.net/image_v1.0.0/?id=50c68e89-78aa-5583-b9fb-a6b7088a2795&638600308421269575',
+      'https://contentservice.mc.reyrey.net/image_v1.0.0/?id=c82054e5-0c08-5936-8b3d-da9c3803a430&638600308520821680',
+      'https://contentservice.mc.reyrey.net/image_v1.0.0/?id=72578b00-ecdb-5e3d-824e-cdd981720b04&638600308646914584',
+      'https://contentservice.mc.reyrey.net/image_v1.0.0/?id=9effa62d-7e3d-5638-9ea2-a02ab3508dfc&638600308768788828'
+    ];
+
+svg.setAttribute('viewBox','0 0 ' + gf.width + ' ' + gf.height);
+
+function grabClick(e) {
+  let x = e.clientX,
+      y = e.clientY,
+      el = document.elementFromPoint(x,y),
+      el_num = el.getAttribute('box'),
+      g = Math.floor(Math.random()*5),
+      o = game_field.getBoundingClientRect(),
+      hit = true;
+
+  if(hit){
+    if(el.getAttribute('box') == 0) g = goalie[0];
+    if(el.getAttribute('box') == 1) g = goalie[1];
+    if(el.getAttribute('box') == 2) g = goalie[2];
+    if(el.getAttribute('box') == 3) g = goalie[3];
+    if(el.getAttribute('box') == 4) g = goalie[4];
+    if(el.id == 'goal') g = 'https://contentservice.mc.reyrey.net/image_v1.0.0/?id=f4278541-20df-568f-baea-e387ee22937c&638600307412335028';
+  } else {
+    g = goalie[g];
+  }
+
+  ball.className = 'kicked';
+  let kick = setInterval(function(){
+    let c = circle.getBoundingClientRect(),
+        cx = c.x,
+        cy = c.y;
+    ball.style.left = cx - ooo - offset + 'px';
+    ball.style.top = (cy - offset) + 'px';
+    setTimeout(function(){
+      clearInterval(kick);
+      let c = circle.getBoundingClientRect(),
+          cx = c.x,
+          cy = c.y;
+      let score = document.elementFromPoint(cx, cy);
+      if(score.getAttribute('box') != el_num){
+        ball.className = 'goal';
+        success.className = 'show_result';
+      } else {
+        ball.className = 'fall';
+        failure.className = 'show_result';
+      }
+    }, 1000);
+  },1000/30);
+
+  setTimeout(function(){
+    goal.style.background = 'url('+g+')';
+    goal.style.animation = 'none';
+  }, 200);
+
+  setTimeout(function(){
+    goal.style.background = '';
+    ball.style.left = '';
+    ball.style.top = '';
+    ball.style.setProperty('--ani', '');
+    ball.className = '';
+    success.className = '';
+    failure.className = '';
+    goal.style.animation = 'shake .25s linear infinite';
+  }, 4000);
+}
+
+goal.addEventListener('click', grabClick);
+
+goal.addEventListener('mousemove', function(e){
+  let x = e.clientX - ooo - offset,
+      y = e.clientY;
+  path.setAttribute('d', 'M '+(b.x - ooo)+' '+(b.y+ offset)+' C '+gfcx+' 250, '+gfcx+' 150, ' + x + ' ' + y);
+  bally.setAttribute('path', 'M '+(b.x - ooo)+' '+(b.y+ offset)+' C '+gfcx+' 250, '+gfcx+' 150, ' + x + ' ' + y);
+});
+</script>
+
+</body>
+</html>
