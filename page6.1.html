@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Celebration</title>
+<title>Close Control</title>
 <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
@@ -35,8 +35,7 @@ body {
 
 /* Images */
 .page-image {
-  width: 60%;
-  margin-left: 20%;
+  width: 100%;
   display: block;
   transform-origin: center center;
   animation: kickoffIntro 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -156,34 +155,37 @@ body {
 
 <div class="page-container">
 
-        <img src="images/Card.png" class="page-image">
+        <img src="images/Close Contol Card.png" class="page-image">
 
   <!-- Text -->
 
 <div class="page-text">
 
 
-    <p>What happens on the football field gives cause for many celebrations.  </p>
-    <p> The amazing save. </p> 
-    <p> The perfect pass.</p>
-    <p> The bicycle kick shot that whooshes past the keeper and wins the game. </p> 
-    <p>The biggest cause for celebration? When the Jules Rimet trophy is lifted high by the conquering team.</p>
+    <p>The best players in football have incredible close control.   </p>
+    <p> In dribbling, players need to keep the ball close. </p> 
+    <p> They have to guard the ball well.</p>
+    <p> Why? Because the ball is the most important thing to protect on the field. </p> 
+    <p>The Bible also talks about something else we need to protect.</p>
   
-  <p>The Bible too speaks of a prize…a crown to wear for eternity.  </p>
+  <p>Our hearts. </p>
   
 
     <p>
-    <strong>1 Corinthians 9:24-25:</strong>
-    “Do you not know that in a race all the runners run, but only one gets the prize? Run in such a way as to get the prize. Everyone who competes in the games goes into strict training. They do it to get a crown that will not last, but we do it to get a crown that will last forever.” </p>
+    <strong>Proverbs 4:23:</strong>
+    “Above all else, guard your heart, for everything you do flows from it.”
+    </p>
 
-    <p>What will make us win this crown that lasts forever?   </p>
-    <p> Is it doing good things?</p>
-    <p> Is it being a moral person?</p>
-    <p>Or is it something more? </p>
-    <p> No matter how good we may be, it is not enough to earn the prize.</p>
-    <p> But that is where Jesus comes in.</p> 
-    <p>Celebration—What is this prize that lasts forever?</p>
-
+    <p>The heart is the core of who you are.  </p>
+    <p> What are you letting in your heart? </p>
+    <p> How do you control what gets in your heart? </p>
+    <p>(and what comes out) </p>
+    <p> The Bible tells us basically, we need to have close control on our hearts.</p>
+    <p> We have to guard and keep close watch on what we let in. </p> 
+    <p>It’s more than just letting in positivity.</p>
+  
+    <p>It’s getting what the Bible says in our heart, so we can truly live it out.</p>  
+    <p>Close Control—What’s in your heart?</p>
   </div>
 
   <!-- Second Image -->
@@ -196,16 +198,16 @@ body {
 
   <!-- 2x2 PNG Grid -->
   <div class="nav-grid">
-    <a href="page6.1.html"><img src="images/Close Contol Card.png"></a>
+    <a href="end.html"><img src="images/Card2.png"></a>
   
-    <a href="page3.1.html"><img src="images/Workteam Card.png"></a>
+    <a href="page2.1.html"><img src="images/Goalkeeping.png"></a>
+    <a href="page4.1.html"><img src="images/Assisting Card.png"></a>
     <a href="page5.1.html"><img src="images/Giant Killer.png"></a>
-    <a href="page1.1.html"><img src="images/Free Kick Card.png"></a>
   </div>
 
 </div>
 
-<!-- Floating Progress Button -->
+<!-- 
 <button id="progress-ui" style="
   position: fixed;
   top: 20px;
@@ -222,13 +224,13 @@ body {
   transform: none;
 "></button>
 
-<!-- Progress Overlay / Popup -->
+
 <div id="progress-overlay" style="
   display: none;
   position: fixed;
   top: 70px;
   right: 20px;
-  width: 200px;
+  width: 250px;
   max-width: 90%;
   padding: 20px;
   background: #ffffff;
@@ -243,8 +245,8 @@ body {
   justify-content: flex-start;
   gap: 10px; /* spacing between items */
   text-align: center;
-">
-  <!-- Close button -->
+">  -->
+  <!-- 
   <button id="close-popup" style="
     position: absolute;
     top: 20px;
@@ -256,7 +258,8 @@ body {
     cursor: pointer;
   ">✕</button>
 
-<h3 style="margin: 10px 0 1px 0;">Want to Play again?</h3>
+  <h3 style="margin: 10px 0 5px 0;">Progress</h3>
+  <p id="progress-count" style="margin: 0;">0 / 6 completed</p>
   <button id="goto-final" style="
     display: none;
     margin-top: 15px;
@@ -267,9 +270,10 @@ body {
     color: white;
     cursor: pointer;
     font-weight: bold;
-  ">Yes</button>
+  ">Go to Final Card</button>
+  
 </div>
-
+ -->
 
 
 <script>
@@ -279,44 +283,56 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const progressBtn = document.getElementById("progress-ui");
 const overlay = document.getElementById("progress-overlay");
+const progressCount = document.getElementById("progress-count");
 const finalBtn = document.getElementById("goto-final");
 const closeBtn = document.getElementById("close-popup");
 
-// Always hide overlay on load
+// FORCE overlay hidden on page load
 overlay.style.display = "none";
 
-progressBtn.addEventListener("click", () => {
+// Load visited progress
+let visited = JSON.parse(localStorage.getItem("visitedPages")) || [];
+const CURRENT_PAGE = document.body.dataset.page || "6";
 
-// Toggle open / close
-if (overlay.style.display === "flex") {
-  overlay.style.display = "none";
-} else {
-  overlay.style.display = "flex";
+// Add current page to visited if 1-6
+if (!visited.includes(CURRENT_PAGE) && CURRENT_PAGE !== "7") {
+  visited.push(CURRENT_PAGE);
+  localStorage.setItem("visitedPages", JSON.stringify(visited));
 }
 
+function updateProgress() {
+  const required = ["1","2","3","4","5","6"];
+  const done = required.filter(id => visited.includes(id)).length;
+  progressCount.textContent = `${done} / 6 completed`;
+
+  // Show final card button if unlocked
+  finalBtn.style.display = done === 6 ? "inline-block" : "none";
+
+  // Update main menu button7 if exists
+  const button7 = document.querySelector('[data-id="7"]');
+  if (button7) {
+    button7.classList.toggle("locked", done !== 6);
+  }
+}
+
+// Click progress button → toggle overlay
+progressBtn.addEventListener("click", () => {
+  overlay.style.display = overlay.style.display === "flex" ? "none" : "flex";
 });
 
-// Close popup
+// Click close button → hide overlay
 closeBtn.addEventListener("click", () => {
   overlay.style.display = "none";
 });
 
-// Play Again button → go to page7
-finalBtn.style.display = "inline-block"; // always visible
 finalBtn.addEventListener("click", () => {
-
-// Close popup first
-overlay.style.display = "none";
-
-// Small delay so it visually closes
-setTimeout(() => {
-  window.location.href = "game2.html";
-}, 200);
+  overlay.style.display = "none";
+  window.location.href = "index.html#final-section";
+});
+// Only update progress numbers; overlay stays hidden
+updateProgress();
 
 });
-
-});
-
 document.addEventListener("DOMContentLoaded", () => {
 
 // Select the 4 PNG grid buttons
