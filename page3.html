@@ -222,71 +222,7 @@ body {
 
 </div>
 
-<!-- Floating Progress Button -->
-<button id="progress-ui" style="
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 9999;
-  padding: 18px 18px;
-  border: none;
-  border-radius: 50px;
-  background: #f7c948;
-  color: #000;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  transform: none;
-"></button>
 
-<!-- Progress Overlay / Popup -->
-<div id="progress-overlay" style="
-  display: none;
-  position: fixed;
-  top: 70px;
-  right: 20px;
-  width: 250px;
-  max-width: 90%;
-  padding: 20px;
-  background: #ffffff;
-  border-radius: 15px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.25);
-  z-index: 9999;
-
-  /* Stack children in a column */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 10px; /* spacing between items */
-  text-align: center;
-">
-  <!-- Close button -->
-  <button id="close-popup" style="
-    position: absolute;
-    top: 20px;
-    right: 19px;
-    border: none;
-    background: none;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-  ">✕</button>
-
-  <h3 style="margin: 10px 0 5px 0;">Progress</h3>
-  <p id="progress-count" style="margin: 0;">0 / 6 completed</p>
-  <button id="goto-final" style="
-    display: none;
-    margin-top: 15px;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 15px;
-    background: #4caf50;
-    color: white;
-    cursor: pointer;
-    font-weight: bold;
-  ">Go to Final Card</button>
-</div>
 
 
 <script>
