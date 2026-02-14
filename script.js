@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
   }
+  
 
 
   /* =========================
@@ -178,3 +179,43 @@ if (button7) {
   checkUnlock();
 
 });
+const container = document.querySelector(".parallax-layers");
+if (container) {
+
+  const layers = [
+    { el: container.querySelector(".layer-1"), speed: 0.35, idleAmp: 10, idleSpeed: 0.0006 },
+    { el: container.querySelector(".layer-2"), speed: 0.25, idleAmp: 7,  idleSpeed: 0.0008 },
+    { el: container.querySelector(".layer-3"), speed: 0.15, idleAmp: 5,  idleSpeed: 0.001 }
+  ];
+
+  let scrollY = window.scrollY;
+  let ticking = false;
+  let lastScrollTime = performance.now();
+
+  function updateParallax(time) {
+    const idleFactor = Math.min((time - lastScrollTime) / 1000, 1);
+
+    layers.forEach(layer => {
+      if (!layer.el) return;
+
+      const scrollOffset = scrollY * layer.speed;
+      const idleOffset =
+        Math.sin(time * layer.idleSpeed) * layer.idleAmp * idleFactor;
+
+      layer.el.style.transform =
+        `translateY(${scrollOffset + idleOffset}px)`;
+    });
+  }
+
+  function animate(time) {
+    updateParallax(time);
+    requestAnimationFrame(animate);
+  }
+
+  window.addEventListener("scroll", () => {
+    scrollY = window.scrollY;
+    lastScrollTime = performance.now();
+  });
+
+  requestAnimationFrame(animate);
+}
