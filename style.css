@@ -186,7 +186,7 @@ body {
 }
 
 .locked {
-    opacity: 0.8;
+
     filter: grayscale(100%);
     cursor: not-allowed;
   }
@@ -204,4 +204,125 @@ body {
     animation: unlockFloat 2.5s cubic-bezier(0.645, 0.045, 0.355, 1) infinite;
     transform-origin: center center;
     cursor: pointer;
+  }
+
+ /* Default: small screens, panel at bottom */
+#progress-panel {
+  position: fixed;
+  bottom: 2%;
+  right: 10%;
+  width: 80%;
+  background: #fff9e2;
+  padding: 10px;
+  border-radius: 14px;
+  z-index: 9999;
+  box-shadow: 0 5px 10px rgb(0, 0, 0);
+   
+}
+
+/* Large screens: 769px and up, move panel to top */
+@media (min-width: 769px) {
+  #progress-panel {
+    top: 2%;
+    bottom: auto; /* unset bottom */
+  }
+}
+  
+  
+  .progress-title {
+    font-weight: 700;
+color: #232323;
+    text-align: center;
+    border-radius: 10px;
+   
+    width: 100%;
+  }
+  
+  /* CARD ROW */
+  .card-row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+    margin-bottom: 7px;
+  
+  }
+  
+  .card-slot {
+    aspect-ratio: 1 / 1;
+    border: 2px dashed #666666;
+    border-radius: 8px;
+    background-size: cover;
+    background-position: center;
+    transition: all 0.3s ease;
+
+  }
+  
+  .card-slot.completed {
+    border: none;
+  
+  }
+  
+  /* PROGRESS BAR */
+  #progress-bar-wrapper {
+    position: relative;
+    height: 15px;
+    background: #232323;
+    
+ 
+    overflow: visible;
+  }
+  
+  #progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background-color: #4caf50;
+ 
+    transition: width 0.4s ease;
+  }
+  
+  /* SOCCER BALL */
+  #soccer-ball {
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    transform: translate(-50%, -50%);
+    height: 22px;
+    pointer-events: none;
+    transition: left 0.4s ease;
+  }
+  
+  /* GOAL */
+  #soccer-goal {
+    position: absolute;
+    top: 50%;
+    right: -26px;
+    transform: translateY(-50%);
+    height: 28px;
+    pointer-events: none;
+  }
+
+  #final-cta-btn {
+    display: none;
+    position: fixed;
+    top: 2%;
+    right: 2%;
+    width: 100px;
+    height: 50px;
+     box-shadow: 0 5px 10px rgb(0, 0, 0);
+
+    border: none;
+    border-radius: 14px;
+    background:  #4caf50;
+    color:#fff9e2;
+    font-weight: 700;
+    font-size: 90%;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    z-index: 9999;
+  }
+ 
+  
+  #progress-panel {
+    /* keep visible */
+    display: block;
   }
