@@ -326,3 +326,9 @@ color: #232323;
     /* keep visible */
     display: block;
   }
+
+  .menu-btn,
+.card-slot {
+  will-change: transform, opacity;
+  contain: content;
+}

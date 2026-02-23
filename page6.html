@@ -153,7 +153,7 @@ body {
 </style>
 </head>
 
-<body>
+<body data-page="6">
 
 <div class="page-container">
 
@@ -282,63 +282,90 @@ body {
 </div>
  -->
 
+ <script>
+/* =========================
+   SHARED PROGRESS CORE
+========================= */
 
-<script>
+const REQUIRED = ["1","2","3","4","5","6"];
 
+function getVisited() {
+  return JSON.parse(localStorage.getItem("visitedPages")) || [];
+}
+
+function saveVisited(list) {
+  localStorage.setItem("visitedPages", JSON.stringify(list));
+}
+
+/**
+ * Mark a card/page as completed
+ */
+function markPageVisited(pageId) {
+  if (!REQUIRED.includes(pageId)) return;
+
+  const visited = getVisited();
+  if (!visited.includes(pageId)) {
+    visited.push(pageId);
+    saveVisited(visited);
+  }
+}
+
+/**
+ * Get progress stats
+ */
+function getProgress() {
+  const visited = getVisited();
+  const completed = REQUIRED.filter(id => visited.includes(id)).length;
+  return {
+    completed,
+    total: REQUIRED.length,
+    percent: (completed / REQUIRED.length) * 100
+  };
+}
 
 document.addEventListener("DOMContentLoaded", () => {
 
+const CURRENT_PAGE = document.body.dataset.page;
+
+// ---- CORE PROGRESS ----
+markPageVisited(CURRENT_PAGE);
+const progress = getProgress();
+
+// ---- UI ELEMENTS ----
 const progressBtn = document.getElementById("progress-ui");
 const overlay = document.getElementById("progress-overlay");
 const progressCount = document.getElementById("progress-count");
 const finalBtn = document.getElementById("goto-final");
 const closeBtn = document.getElementById("close-popup");
 
-// FORCE overlay hidden on page load
-overlay.style.display = "none";
+if (overlay) overlay.style.display = "none";
 
-// Load visited progress
-let visited = JSON.parse(localStorage.getItem("visitedPages")) || [];
-const CURRENT_PAGE = document.body.dataset.page || "6";
+function updateOverlayUI() {
+  if (progressCount) {
+    progressCount.textContent = `${progress.completed} / 6 completed`;
+  }
 
-// Add current page to visited if 1-6
-if (!visited.includes(CURRENT_PAGE) && CURRENT_PAGE !== "7") {
-  visited.push(CURRENT_PAGE);
-  localStorage.setItem("visitedPages", JSON.stringify(visited));
-}
-
-function updateProgress() {
-  const required = ["1","2","3","4","5","6"];
-  const done = required.filter(id => visited.includes(id)).length;
-  progressCount.textContent = `${done} / 6 completed`;
-
-  // Show final card button if unlocked
-  finalBtn.style.display = done === 6 ? "inline-block" : "none";
-
-  // Update main menu button7 if exists
-  const button7 = document.querySelector('[data-id="7"]');
-  if (button7) {
-    button7.classList.toggle("locked", done !== 6);
+  if (finalBtn) {
+    finalBtn.style.display =
+      progress.completed === 6 ? "inline-block" : "none";
   }
 }
 
-// Click progress button → toggle overlay
-progressBtn.addEventListener("click", () => {
-  overlay.style.display = overlay.style.display === "flex" ? "none" : "flex";
+// ---- EVENTS ----
+progressBtn?.addEventListener("click", () => {
+  overlay.style.display =
+    overlay.style.display === "flex" ? "none" : "flex";
 });
 
-// Click close button → hide overlay
-closeBtn.addEventListener("click", () => {
+closeBtn?.addEventListener("click", () => {
   overlay.style.display = "none";
 });
 
-finalBtn.addEventListener("click", () => {
-  overlay.style.display = "none";
+finalBtn?.addEventListener("click", () => {
   window.location.href = "index.html#final-section";
 });
-// Only update progress numbers; overlay stays hidden
-updateProgress();
 
+updateOverlayUI();
 });
 document.addEventListener("DOMContentLoaded", () => {
 
