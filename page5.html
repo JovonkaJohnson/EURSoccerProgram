@@ -150,12 +150,32 @@ body {
     transform-origin: center center;
 }
 
+/* Banner Button Styles */
+.banner-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  width: 100%;           /* full width of container */
+  max-width: 1440px;     /* optional max width */
+  margin: 20px auto;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 10px rgba(4, 4, 4, 0.623);
+  cursor: pointer;
+ }
+
+.banner-img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
 
 
 </style>
 </head>
 
-<body data-page="5">
+<body data-page="6">
 
 <div class="page-container">
 
@@ -197,14 +217,10 @@ body {
   
   </div>
 
-  <iframe
-  src="https://www.bible.com/reading-plans/25084-catechism-gods-love"
-  width="100%"
-  height="500"
-  style="border:1px solid #cccccc00; border-radius:10px;"
-  loading="lazy">
-</iframe>
-
+  <a href="https://www.bible.com/reading-plans/25084-catechism-gods-love" target="_blank" class="banner-button">
+    <img src="images/English-colored.webp" alt="" class="banner-img" />
+    
+  </a>
   
   <!-- OR Continue Here -->
   <div class="or-heading"></div>

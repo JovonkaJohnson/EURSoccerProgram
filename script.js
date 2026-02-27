@@ -116,21 +116,21 @@ function initWebPLoader(visited, CARD_IMAGES, MENU_IMAGES) {
 const REQUIRED = ["1","2","3","4","5","6"];
 
 const CARD_IMAGES = {
-  "1": "images/Free Kick Card no text.webp",
-  "2": "images/Goalkeeping no text.webp",
-  "3": "images/Workteam Card no text.webp",
-  "4": "images/Assisting Card no text.webp",
-  "5": "images/Giant Killer no text.webp",
-  "6": "images/Close Contol Card no text.webp"
+ "1": "images/Goalkeeping.webp",
+  "2": "images/Workteam Card.webp",
+  "3": "images/Assisting Card.webp",
+  "4": "images/Free Kick Card.webp",
+  "5": "images/Close Contol Card.webp",
+  "6": "images/Giant Killer.webp"
 };
 
 const MENU_IMAGES = {
-  "1": "images/Free Kick Card.webp",
-  "2": "images/Goalkeeping.webp",
-  "3": "images/Workteam Card.webp",
-  "4": "images/Assisting Card.webp",
-  "5": "images/Giant Killer.webp",
-  "6": "images/Close Contol Card.webp"
+  "1": "images/Goalkeeping.webp",
+  "2": "images/Workteam Card.webp",
+  "3": "images/Assisting Card.webp",
+  "4": "images/Free Kick Card.webp",
+  "5": "images/Close Contol Card.webp",
+  "6": "images/Giant Killer.webp"
 };
 
 function getVisited() {
@@ -274,23 +274,7 @@ document.addEventListener("DOMContentLoaded", () => {
     requestAnimationFrame(animate);
   }
 
-  /* -------------------------
-     SPORTY FLOAT
-  ------------------------- */
-  const animatedItems = document.querySelectorAll(".menu-btn, .card-slot, .page-image");
-  function triggerSporty(el) {
-    el.classList.remove("sporty-float");
-    void el.offsetHeight;
-    el.classList.add("sporty-float");
-  }
-  const sportyObserver = new IntersectionObserver(
-    entries => entries.forEach(entry => {
-      if (entry.isIntersecting) triggerSporty(entry.target);
-    }),
-    { threshold: 0.25, rootMargin: "0px 0px -20% 0px" }
-  );
-  animatedItems.forEach(el => sportyObserver.observe(el));
-
+  
   /* -------------------------
      LAZY LOAD + PRELOAD
   ------------------------- */

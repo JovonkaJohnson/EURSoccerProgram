@@ -105,10 +105,10 @@ body {
   
   /* Individual offsets */
 /* Individual offsets using margin instead of transform */
-.menu-btn:nth-child(1) { margin-left: 10%;  margin-top: -50%; }
+.menu-btn:nth-child(1) { margin-left: -10%;  margin-top: -50%; }
 .menu-btn:nth-child(2) { margin: -10%;  margin-top: -40%;}
 .menu-btn:nth-child(3) { margin: -10%;  margin-top: -20%; }
-.menu-btn:nth-child(4) { margin-left: 0%; margin-top: -10%;   }
+.menu-btn:nth-child(4) { margin-right: -10%; margin-top: -10%;   }
 .menu-btn:nth-child(5) { margin-left: -10%; margin-top: -40%; }
 .menu-btn:nth-child(6) { margin-left: 0%;   margin-top: -30%; }
 .menu-btn:nth-child(7) { margin-left: -5%;   width: 70%; margin-top: 210%; }
@@ -123,6 +123,19 @@ body {
     cursor: default; /* shows default cursor */
     opacity: 1;      /* keep full opacity, optional */
   }
+  .menu-btn:nth-child(9) {
+    pointer-events: none;
+    cursor: default; 
+     text-align: center;
+    font-family: 'Russo One', sans-serif;
+    font-size: 1.6rem;
+    color: #ffffff;
+    width: 100%; 
+    z-index: 999;
+    margin-top: -50%;
+    position: absolute;
+  }
+  
   /* -----------------------
      Responsive widths
   ----------------------- */
@@ -234,7 +247,7 @@ body {
 color: #232323;
     text-align: center;
     border-radius: 10px;
-   
+
     width: 100%;
   }
   
@@ -242,13 +255,13 @@ color: #232323;
   .card-row {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    gap: 8px;
+    gap: 4px;
     margin-bottom: 7px;
   
   }
   
   .card-slot {
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 3 / 4;
     border: 2px dashed #666666;
     border-radius: 8px;
     background-size: cover;
@@ -331,4 +344,86 @@ color: #232323;
 .card-slot {
   will-change: transform, opacity;
   contain: content;
+}
+
+/* White pulsing copies align with original buttons */
+.pulse-btn {
+  filter: brightness(0) invert(1);
+  animation: pulseCopy 2s ease-in-out infinite;
+
+  pointer-events: none;
+  z-index: -2;
+
+}
+
+/* Position each white copy exactly like the original zig-zag offsets */
+.menu-buttons2 {
+  display: flex;
+  flex-direction:column;
+  height: 0;
+  cursor:pointer;
+}
+
+@media (min-width: 2560px) { 
+  .pulse-btn { width: 62%; } 
+}
+
+/* 1440px–2559px */
+@media (max-width: 2559px) and (min-width: 1440px) { 
+  .pulse-btn { width: 62%; } 
+}
+
+/* 1024px–1439px */
+@media (max-width: 1439px) and (min-width: 1024px) { 
+  .pulse-btn { width: 62%; } 
+}
+
+/* 768px–1023px */
+@media (max-width: 1023px) and (min-width: 768px) { 
+  .pulse-btn { width: 62%; } 
+}
+
+/* 425px–767px */
+@media (max-width: 767px) and (min-width: 425px) { 
+  .pulse-btn { width: 62%; } 
+}
+
+/* 375px–424px */
+@media (max-width: 424px) and (min-width: 375px) { 
+  .pulse-btn { width: 62%; } 
+}
+
+/* ≤374px */
+@media (max-width: 374px) and (min-width: 0px) { 
+  .pulse-btn { width: 62%; } 
+}
+
+.menu-boundary2 {
+  position: absolute;
+  width: 80%;   
+  height: auto;      
+  display: flex;
+  flex-direction: column; /* stack buttons vertically */
+  justify-content: flex-start; /* start from top, no spreading */
+  margin: 0 auto;    
+  margin-top: 0%; 
+  z-index: 1;
+margin-left: 10%;
+    }
+    @keyframes pulseCopy {
+      0% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.06); opacity: 0.8; }
+      100% { transform: scale(1); opacity: 0.5; }
+    }
+
+
+/* Light grey, smaller instruction text under the title */
+.progress-instruction {
+  font-size: 0.6rem;
+  color: #00000093;       /* light grey */
+     /* small spacing below the title */
+  font-family: 'Poppins', sans-serif;
+  font-weight: 100;
+  text-align: center;
+padding-bottom: 2%;
 }
