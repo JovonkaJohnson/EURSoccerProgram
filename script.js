@@ -116,12 +116,12 @@ function initWebPLoader(visited, CARD_IMAGES, MENU_IMAGES) {
 const REQUIRED = ["1","2","3","4","5","6"];
 
 const CARD_IMAGES = {
- "1": "images/Goalkeeping.webp",
-  "2": "images/Workteam Card.webp",
-  "3": "images/Assisting Card.webp",
-  "4": "images/Free Kick Card.webp",
-  "5": "images/Close Contol Card.webp",
-  "6": "images/Giant Killer.webp"
+ "1": "images/Goalkeeping no text.webp",
+  "2": "images/Workteam Card no text.webp",
+  "3": "images/Assisting Card no text.webp",
+  "4": "images/Free Kick Card no text.webp",
+  "5": "images/Close Contol Card no text.webp",
+  "6": "images/Giant Killer no text.webp"
 };
 
 const MENU_IMAGES = {
@@ -243,7 +243,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const parallaxContainer = document.querySelector(".parallax-layers");
   if (parallaxContainer) {
     const layers = [
-      { el: parallaxContainer.querySelector(".layer-1"), speed: 0.35, idleAmp: 4, idleSpeed: 0.0008 },
+      { el: parallaxContainer.querySelector(".layer-1"), speed: 0.1, idleAmp: 4, idleSpeed: 0.0008 },
       { el: parallaxContainer.querySelector(".layer-2"), speed: 0.25, idleAmp: 3, idleSpeed: 0.001 },
       { el: parallaxContainer.querySelector(".layer-3"), speed: 0.15, idleAmp: 2, idleSpeed: 0.0012 }
     ];
