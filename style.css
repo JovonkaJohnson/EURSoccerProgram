@@ -427,3 +427,141 @@ margin-left: 10%;
   text-align: center;
 padding-bottom: 2%;
 }
+/* FINAL POPUP */
+/* BASE STYLES (mobile/default) */
+#final-overlay{
+  position:fixed;
+  top:100px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:999999;
+  display:none;
+}
+
+/* POPUP BOX */
+.final-overlay-content{
+  background: #fff9e2;
+  padding:30px 40px;
+  border-radius:20px;
+  text-align:center;
+  box-shadow:0 0 30px rgba(0,0,0,0.6);
+  max-width: 350px;
+}
+
+/* BALL + FIRE */
+.ball-fire-wrapper{
+  position:relative;
+  width:100%;
+  margin:auto;
+}
+
+.final-ball{
+  width:190px;
+  position:relative;
+  bottom:-40px;
+  z-index:2;
+  animation:rotateBall 2s linear infinite;
+}
+
+.fire-loop{
+  width:230px;
+  position:absolute;
+  bottom:10px;
+  left:53%;
+  transform:translateX(-50%);
+  z-index:1;
+}
+
+/* TEXT */
+.final-text{
+  position: relative;
+  margin-top:0px;
+  font-size:20px;
+  color:rgb(30, 30, 30);
+  font-weight: 700;
+  left:-5%;
+  width:110%;
+  color: #232323;}
+
+.final-subtext{
+  display:block;
+  font-size:14px;
+  color:#9a9a9a;
+  margin-top:4px;
+
+  color: #00000093;       /* light grey */
+     /* small spacing below the title */
+  font-family: 'Poppins', sans-serif;
+  font-weight: 100;
+  text-align: center;
+}
+
+/* BUTTON */
+#go-final-card{
+  margin-top:20px;
+  padding:16px 36px;
+  font-size:18px;
+  font-family:'Russo One', sans-serif;
+  background:#020202;
+  color:white;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.7);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+
+
+
+/* ===== MEDIA QUERIES FOR LARGER SCREENS ===== */
+
+/* Tablets */
+@media screen and (min-width:768px){
+  .final-overlay-content{
+    padding:40px 50px;
+    max-width:500px;
+  }
+  .final-ball{
+    width:250px;
+  }
+  .fire-loop{
+    width:300px;
+    bottom:-20px;
+  }
+  .final-text{
+    font-size:24px;
+  }
+  .final-subtext{
+    font-size:16px;
+  }
+  #go-final-card{
+    padding:20px 44px;
+    font-size:20px;
+  }
+}
+
+/* Desktop */
+@media screen and (min-width:1200px){
+  .final-overlay-content{
+    padding:50px 60px;
+    max-width:700px;
+  }
+  .final-ball{
+    width:320px;
+  }
+  .fire-loop{
+    width:380px;
+    bottom:-30px;
+  }
+  .final-text{
+    font-size:30px;
+  }
+  .final-subtext{
+    font-size:18px;
+  }
+  #go-final-card{
+    padding:24px 50px;
+    font-size:24px;
+  }
+}

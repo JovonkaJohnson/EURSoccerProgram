@@ -118,18 +118,18 @@ const REQUIRED = ["1","2","3","4","5","6"];
 const CARD_IMAGES = {
  "1": "images/Goalkeeping no text.webp",
   "2": "images/Workteam Card no text.webp",
-  "3": "images/Assisting Card no text.webp",
-  "4": "images/Free Kick Card no text.webp",
   "5": "images/Close Contol Card no text.webp",
+  "4": "images/Free Kick Card no text.webp",
+  "3": "images/Assisting Card no text.webp",
   "6": "images/Giant Killer no text.webp"
 };
 
 const MENU_IMAGES = {
   "1": "images/Goalkeeping.webp",
   "2": "images/Workteam Card.webp",
-  "3": "images/Assisting Card.webp",
-  "4": "images/Free Kick Card.webp",
   "5": "images/Close Contol Card.webp",
+  "4": "images/Free Kick Card.webp",
+  "3": "images/Assisting Card.webp",
   "6": "images/Giant Killer.webp"
 };
 
@@ -186,14 +186,27 @@ document.addEventListener("DOMContentLoaded", () => {
   if (progressFill) progressFill.style.width = `${progress.percent}%`;
   if (soccerBall) soccerBall.style.left = `${progress.percent}%`;
 
-  if (finalBtn && progress.completed === REQUIRED.length) {
-    finalBtn.style.display = "block";
-    finalBtn.addEventListener("click", () => {
-      const target = document.getElementById("final-section");
-      if (target) target.scrollIntoView({ behavior: "smooth" });
-      else window.location.href = "index.html#final-section";
-    });
-  }
+  const finalOverlay = document.getElementById("final-overlay");
+const goFinalBtn = document.getElementById("go-final-card");
+
+if (progress.completed === REQUIRED.length) {
+
+  finalOverlay.style.display = "block";
+
+  goFinalBtn.addEventListener("click", () => {
+
+    const target = document.getElementById("final-section");
+
+    if (target) {
+      finalOverlay.style.display = "none";
+      target.scrollIntoView({ behavior: "smooth" });
+    } else {
+      window.location.href = "index.html#final-section";
+    }
+
+  });
+
+}
 
   /* -------------------------
      CARD SLOTS

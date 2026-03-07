@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,79 +13,87 @@ html, body {
     width:100%;
     height:100%;
     overflow:hidden;
-    background:#000;
+    background: #fff9e2;
     font-family:'Poppins', sans-serif;
     touch-action:none;
     user-select:none;
 }
+/* PHONE ASPECT RATIO CONTAINER */
+#gameContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;       /* fill full width */
+    height: 100vh;      /* fill full height */
+    background: transparent; /* let #sky show */
+    overflow: hidden;
+    transform: none;    /* remove translate, we fill the screen */
+}
+
 
 #gameArea {
-    position:fixed;
+    position:absolute;
     inset:0;
     overflow:hidden;
 }
 
 /* ===== BACKGROUND RECTANGLES ===== */
 #sky {
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:50%;
-    background:#4DA6FF;
-    z-index:0;
+    position: absolute;
+    bottom: 0%;
+    left: 0%;                  /* center horizontally */
+    width: 100%;              /* fixed width */
+    height:  100%;             /* fixed height */
+    margin-left: 0px;        /* shift left by half width to center */
+    background-image: url("images/Field.png");
+    background-size: 100% 100%;  /* exact image size */
+    background-repeat: no-repeat;
+    background-position: top center;
+    z-index: 0;
 }
 
-#grass {
-    position:absolute;
-    bottom:0;
-    left:0;
-    width:100%;
-    height:50%;
-    background:#33CC33;
-    z-index:0;
-}
+
 
 /* GOAL */
 #goal {
-    width:65%;
-    max-width:340px;
-    height:110px;
-    border:10px solid #EEE;
-    border-bottom:none;
-    position:absolute;
-    top:28%;
-    left:50%;
-    transform:translateX(-50%);
-    background:rgba(0, 0, 0, 0.271);
-    z-index:4;
-    border-radius:5px 5px 0 0;
+    width: 100%;                     /* keep relative width */
+    height: auto;                   /* maintain image aspect ratio */
+               /* optional: cap height relative to container */
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-image: url("images/Goal-2.png");  /* replace with your goal image */
+    background-size: contain;       /* scale image to fit the container */
+    background-repeat: no-repeat;
+    background-position: center bottom;  /* aligns bottom of goal */
+    z-index: 4;
 }
 
-/* GOALKEEPER */
 #goalkeeper {
-    width:50px;
-    height:50px;
-    background:#D32F2F;
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translateX(-50%);
-    border-radius:50%;
-    border:2px solid white;
-    z-index:5;
+    position: absolute;
+    width: 50%;   /* 50% of goal width */
+    height: auto; /* keep aspect ratio */
+    max-height: 200px; /* optional cap */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-image: url("images/Goalkeeper.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 5;
 }
-
 /* BALL */
 #ball {
-    width:58px;
+    width: 70px;
     height:58px;
     border-radius:50%;
     position:absolute;
-    bottom:0%;
+    bottom:9%;
     left:50%;
     transform:translate(-50%,0);
-    background:url('https://upload.wikimedia.org/wikipedia/commons/d/d3/Soccerball.svg') center / 105% no-repeat;
+    background:url("images/Ball.png") center / 105% no-repeat;
     z-index:10;
 }
 
@@ -110,7 +118,7 @@ html, body {
     top:10px;
     right:20px;
     font-size:30px;
-    color:white;
+    color:rgba(0, 0, 0, 0.90);
     font-family:'Russo One', sans-serif;
     z-index:21;
 }
@@ -128,7 +136,7 @@ html, body {
 #hamburger div {
     width:100%;
     height:4px;
-    background:white;
+    background:rgb(0, 0, 0.90);
     margin:4px 0;
 }
 
@@ -204,26 +212,37 @@ html, body {
 /* ===== HITBOX DEBUG ===== */
 .debug-hitbox {
     position:absolute;
-    border:2px solid lime;
+    border:2px solid rgba(0, 255, 0, 0);
     pointer-events:none;
     z-index:9;
 }
 
 #goalHitbox {
-    background:rgba(0,255,0,0.15);
+    background:rgba(0, 255, 0, 0);
 }
-
-/* TABLET & UP */
-@media (max-width:768px) {
+@media (max-width:431px) {
     #goal {
         width:75%;
-        max-width:520px;
+     
         height: 25%;
-        border-width:14px;
+       
     }
     #goalkeeper {
-        width:80px;
-        height:80px;
+        width: 45vw;
+        height: 45vw;
+    }
+}
+/* TABLET & UP */
+@media (min-width:426px) {
+    #goal {
+        width:45%;
+      
+        height: 25%;
+      
+    }
+    #goalkeeper {
+        width: 30vw;             /* 5% of viewport width */
+        height: 30vw;  
     }
 }
 
@@ -231,54 +250,28 @@ html, body {
 @media (min-width:769px) and (max-width:1440px) {
     #goal {
         width:40%;
-        max-width:400px;
+        
         height: 25%;
+      
     }
     #goalkeeper {
-        width:80px;
-        height:80px;
+        width: 30vw;             /* 5% of viewport width */
+        height: 30vw;  
     }
 }
 
-/* -------- LARGE SCREENS -------- */
-@media (min-width:1441px) {
-    #goal {
-        width:50%;
-        max-width:700px;
-    }
-    #goalkeeper {
-        width:90px;
-        height:90px;
-    }
-}
-@media (min-width:1442px) and (max-width:2560px) {
-    #goal {
-        width:70%;
-        max-width:900px;
-        height: 25%;
-        top:40%;
-    }
-    #goalkeeper {
-        width:80px;
-        height:80px;
-        top:65%;
-    }
-}
-@media (min-width:2561px) {
-    #goal {
-        width:70%;
-        max-width:900px;
-        height: 25%;
-        top:40%;
-    }
-    #goalkeeper {
-        width:80px;
-        height:80px;
-        top:65%;
-    }
-}
 /* ===== LAPTOP & DESKTOP UI SCALING ===== */
 @media (min-width: 1024px) {
+    #goal {
+        width:40%;
+        
+        height: 25%;
+        border-width:14px;
+    }
+    #goalkeeper {
+        width: 30vw;             /* 5% of viewport width */
+        height: 30vw;  
+    }
 
 /* SCORE TEXT */
 #scoreDisplay {
@@ -345,17 +338,7 @@ html, body {
     pointer-events: none;    /* clicks pass through until active */
 }
 
-/* CROWD BEHIND GOAL */
-#crowd {
-    position:absolute;
-    left:0;
-    width:100%;
-    height:100px;
-    background:rgb(224, 184, 104); /* placeholder color for crowd */
-    bottom:50%; /* just above grass */
-    z-index:3;
-    transform-origin: bottom center;
-}
+
 
 /* CROWD BOUNCE ANIMATION */
 @keyframes bounceCrowd {
@@ -372,6 +355,28 @@ html, body {
 
 <body>
     <div id="fadeScreen"></div>
+    <div id="screenWarning" style="
+position:fixed;
+inset:0;
+background:rgb(0, 0, 0);
+display:none;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+z-index:100;
+color:white;
+text-align:center;
+font-family:'Russo One', sans-serif;
+padding:40px;
+">
+<h2 style="font-size:36px;">⚠ Screen Too Large</h2>
+<p style="font-size:20px; max-width:500px;">
+This game is best played on a smaller screen or mobile device.
+</p>
+<p style="margin-top:20px; opacity:0.7;">
+Try resizing your browser window.
+</p>
+</div>
 <!-- TUTORIAL OVERLAY -->
 <div id="tutorialOverlay" style="
     position:fixed;
@@ -391,7 +396,8 @@ html, body {
     <p>Avoid the goalkeeper. Score 3 goals to unlock the celebration.</p>
     <p style="margin-top:60px; font-size:12px;  color:rgb(149, 149, 149);">Tap anywhere to start</p>
 </div>
-<div id="gameArea">
+<div id="gameContainer">
+    <div id="gameArea">
     <div id="sky"></div>
     <div id="grass"></div>
 <!-- FADE IN OVERLAY -->
@@ -440,7 +446,8 @@ html, body {
             <button id="goBtn" style="padding:14px; border:none; border-radius:10px; background:#4caf50; color:white; font-weight:bold; cursor:pointer; font-size:18px;">Go!</button>
         </div>
     </div>
-
+</div>
+</div>
 <script>
     // ===== ELEMENTS =====
     const ball = document.getElementById('ball');
@@ -474,7 +481,7 @@ html, body {
     const GOAL_HITBOX_SCALE = 0.7;
 
     function resetBall() {
-        ballX = 50; ballY = 0;
+        ballX = 50; ballY = 9;
         ballSpeedX = 0; ballSpeedY = 0;
         isShooting = false;
         ball.style.left = ballX + '%';
@@ -552,42 +559,54 @@ html, body {
     }
 
     function checkCollision() {
-        const b = ball.getBoundingClientRect();
-        const k = keeper.getBoundingClientRect();
-        const goalHB = goalHitbox.getBoundingClientRect();
+    const b = ball.getBoundingClientRect();
+    const k = keeper.getBoundingClientRect();
 
-        if (
-            b.left < k.right &&
-            b.right > k.left &&
-            b.top < k.bottom &&
-            b.bottom > k.top
-        ) {
-            showMessage("FAIL!", "#ff3333", resetBall);
-            return;
-        }
+    // Use the scaled hitbox
+    const hitboxScale = 0.2; // match what you used in updateHitboxes
+    const hitboxWidth = k.width * hitboxScale;
+    const hitboxHeight = k.height * hitboxScale;
+    const hitboxLeft = k.left + (k.width - hitboxWidth) / 2;
+    const hitboxTop = k.top + (k.height - hitboxHeight) / 2;
 
-        if (ballInsideGoalHitbox(b, goalHB)) {
-    score++;
-    scoreDisplay.textContent = "Score: " + score;
-    keeperSpeedPx += 10;
+    const goalHB = goalHitbox.getBoundingClientRect();
 
-    if (score >= 3) {
-        isPaused = true;
-          document.getElementById('winOverlay').style.display = 'flex';
-          confettiAnimation();
-          document.getElementById('goBtn').onclick = () => {
-    fadeOutAndRedirect('end.html');
-};
+    // ===== KEEPER COLLISION =====
+    if (
+        b.right > hitboxLeft &&
+        b.left < hitboxLeft + hitboxWidth &&
+        b.bottom > hitboxTop &&
+        b.top < hitboxTop + hitboxHeight
+    ) {
+        showMessage("FAIL!", "#ff3333", resetBall);
         return;
-    } else {
-        showMessage("GOAL!", "#33ff33", resetBall);
     }
-    return;
-}
-        if (ballY > 100) {
-            showMessage("MISS!", "#ff3333", resetBall);
+
+    // ===== GOAL COLLISION =====
+    if (ballInsideGoalHitbox(b, goalHB)) {
+        score++;
+        scoreDisplay.textContent = "Score: " + score;
+        keeperSpeedPx += 10;
+
+        if (score >= 3) {
+            isPaused = true;
+            document.getElementById('winOverlay').style.display = 'flex';
+            confettiAnimation();
+            document.getElementById('goBtn').onclick = () => {
+                fadeOutAndRedirect('end.html');
+            };
+            return;
+        } else {
+            showMessage("GOAL!", "#33ff33", resetBall);
         }
+        return;
     }
+
+    if (ballY > 100) {
+        showMessage("MISS!", "#ff3333", resetBall);
+    }
+}
+    
     function confettiAnimation() {
     const canvas = document.getElementById('confettiCanvas');
     const ctx = canvas.getContext('2d');
@@ -655,30 +674,39 @@ html, body {
 
     draw();
 }
-    function updateHitboxes() {
-        const b = ball.getBoundingClientRect();
-        const k = keeper.getBoundingClientRect();
-        const g = goal.getBoundingClientRect();
+function updateHitboxes() {
+    const b = ball.getBoundingClientRect();
+    const k = keeper.getBoundingClientRect();
+    const g = goal.getBoundingClientRect();
 
-        ballHitbox.style.left = b.left + 'px';
-        ballHitbox.style.top = b.top + 'px';
-        ballHitbox.style.width = b.width + 'px';
-        ballHitbox.style.height = b.height + 'px';
+    // ===== BALL HITBOX =====
+    ballHitbox.style.left = b.left + 'px';
+    ballHitbox.style.top = b.top + 'px';
+    ballHitbox.style.width = b.width + 'px';
+    ballHitbox.style.height = b.height + 'px';
 
-        keeperHitbox.style.left = k.left + 'px';
-        keeperHitbox.style.top = k.top + 'px';
-        keeperHitbox.style.width = k.width + 'px';
-        keeperHitbox.style.height = k.height + 'px';
+    // ===== KEEPER HITBOX (smaller than image) =====
+    const hitboxScale = 0.2; // adjust to desired size
+    const hitboxWidth = k.width * hitboxScale;
+    const hitboxHeight = k.height * hitboxScale;
 
-        const hitboxWidth = g.width * GOAL_HITBOX_SCALE;
-        const hitboxLeft = g.left + (g.width - hitboxWidth) / 2;
+    keeperHitbox.style.width = hitboxWidth + 'px';
+    keeperHitbox.style.height = hitboxHeight + 'px';
+    keeperHitbox.style.left = k.left + (k.width - hitboxWidth) / 2 + 'px';
+    keeperHitbox.style.top = k.top + (k.height - hitboxHeight) / 2 + 'px';
 
-        goalHitbox.style.left = hitboxLeft + 'px';
-        goalHitbox.style.top = g.top + 'px';
-        goalHitbox.style.width = hitboxWidth + 'px';
-        goalHitbox.style.height = (g.height * 0.5) + 'px';
-    }
+  // ===== GOAL HITBOX =====
+const goalHitboxWidth = g.width * GOAL_HITBOX_SCALE;
+const goalHitboxHeight = g.height * 0.55;
 
+const goalHitboxLeft = g.left + (g.width - goalHitboxWidth) / 2;
+const goalHitboxTop = g.top + (g.height - goalHitboxHeight) / 2;
+
+goalHitbox.style.left = goalHitboxLeft + 'px';
+goalHitbox.style.top = goalHitboxTop + 'px';
+goalHitbox.style.width = goalHitboxWidth + 'px';
+goalHitbox.style.height = goalHitboxHeight + 'px';
+}
     function gameLoop(time) {
         const delta = (time - lastTime) / 1000;
         lastTime = time;
@@ -692,8 +720,7 @@ html, body {
     requestAnimationFrame(gameLoop);
 
     document.body.addEventListener('click', e => {
-        if (isShooting || isPaused || isCooldown) return;
-
+        if (isShooting || isPaused || isCooldown || gameStarting) return;
         const goalRect = goal.getBoundingClientRect();
         let clampedX = Math.max(goalRect.left, Math.min(e.clientX, goalRect.right));
         let aim = (clampedX - goalRect.left) / goalRect.width;
@@ -770,15 +797,34 @@ function fadeOutAndRedirect(url) {
 // ===== TUTORIAL HANDLER WITH DELAY =====
 const tutorialOverlay = document.getElementById('tutorialOverlay');
 isPaused = true; // pause game at start
-
+let gameStarting = true;
 tutorialOverlay.addEventListener('click', () => {
-    tutorialOverlay.style.display = 'none'; // hide tutorial
 
-    // Optional: small delay before starting
-    setTimeout(() => {
-        isPaused = false; // resume game
-    }, 1000); // 1000ms = 1 second delay
+tutorialOverlay.style.display = 'none';
+gameStarting = true;
+isPaused = true;
+
+// wait 2 seconds before allowing gameplay
+setTimeout(() => {
+    gameStarting = false;
+    isPaused = false;
+}, 100);
+
 });
+const screenWarning = document.getElementById('screenWarning');
+
+function checkScreenSize() {
+    if (window.innerWidth > 1024) {
+        screenWarning.style.display = "flex";
+        isPaused = true;
+    } else {
+        screenWarning.style.display = "none";
+        isPaused = false;
+    }
+}
+
+window.addEventListener("resize", checkScreenSize);
+window.addEventListener("load", checkScreenSize);
 </script>
 
 </body>
