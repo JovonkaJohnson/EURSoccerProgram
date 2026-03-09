@@ -12,11 +12,9 @@
 * {
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
-
   box-sizing: border-box;
 }
-/*67 add this*/
+
 body {
     font-family:'Poppins', sans-serif;
   background: #fff9e2;
@@ -26,7 +24,7 @@ body {
   width:100%;
 }
 
-/*67 add this*/
+/* Main Wrapper */
 .page-container {
   text-align: center;
   width: 100%;
@@ -91,7 +89,7 @@ body {
   margin-bottom: 10px;
   color: #1a1a1a;
 }
-/*67 add this*/
+
 .return-btn {
   display: inline-block;
    padding: 2%;
@@ -104,11 +102,12 @@ body {
   border-radius: 50px;
   font-size: clamp(16px, 2.5vw, 20px);
 }
-/*67 add this*/
+
+/* OR Heading */
 .or-heading {
 
-  font-size: clamp(15px, 4vw, 15px);
-  color: rgba(76, 76, 76, 0.768)
+font-size: clamp(15px, 4vw, 15px);
+color: rgba(76, 76, 76, 0.768)
 }
 
 /* PNG Grid - ALWAYS 2x2 */
@@ -117,17 +116,16 @@ body {
   grid-template-columns: repeat(2, 1fr); /* always 2 columns */
   gap:0%;
 
-
+    
 }
 
-/*67 add this*/
+/* PNG Buttons */
 .nav-grid a {
   display: flex;
   overflow-y: hidden;
   overflow-x: hidden;
   justify-content: center;
 }
-
 .nav-grid a img {
   width: 100%;
   
@@ -135,6 +133,10 @@ body {
   transition: transform 0.3s ease;
 }
 
+/* Hover */
+.nav-grid a:hover img {
+  transform: scale(1.05);
+}
 
 @keyframes sportyFloat {
     0%   { transform: scale(1) rotateZ(0deg); }
@@ -148,7 +150,8 @@ body {
     animation: sportyFloat 2.5s cubic-bezier(0.645, 0.045, 0.355, 1) forwards;
     transform-origin: center center;
 }
-/*67 add this*/
+
+
 .banner-button {
   display: flex;
   flex-direction: column;
@@ -165,6 +168,7 @@ body {
   animation: whitePulse 2s ease-out infinite;
 }
 
+
 @keyframes whitePulse {
   0% {
     box-shadow: 0 0 0 0 rgba(255, 247, 0, 0.8);
@@ -180,20 +184,18 @@ body {
 }
 
 .banner-img {
-  
   width: 100%;
   height: auto;
   object-fit: cover;
 }
 /* CTA Section */
-/*67 add this*/
 .cta-section{
 
   
-  padding-right: 10%;
+padding-right: 10%;
 padding-left: 10%;
 }
-/*67 add this*/
+
 .cta-text{
   font-size: clamp(15px, 2.6vw, 20px);
 
@@ -211,7 +213,7 @@ padding-left: 10%;
   text-decoration:none;
   border-radius:40px;
   font-weight:700;
-  font-size: clamp(16px, 2.5vw, 20px);
+  font-size:15px;
   transition:transform .2s ease, box-shadow .2s ease;
 }
 
@@ -219,7 +221,6 @@ padding-left: 10%;
   transform:translateY(-2px);
   box-shadow:0 8px 18px rgba(0,0,0,.25);
 }
-/*67 add this*/
 .section{
 min-height:auto;
 width: 100%;
@@ -280,7 +281,6 @@ height: 25%;
 }
 
 
-
 .section2{
 background:#fff9e2;
 font-size: clamp(16px, 2.5vw, 20px);
@@ -297,7 +297,7 @@ padding-top: 5%;
 .team-quote{
 
   font-style:italic;
-  text-align:center;
+  text-align: left;
 
 margin-bottom: 5%;
 }
@@ -314,7 +314,7 @@ margin-bottom: 5%;
 .section3{
   content:"";
   width: 100%;
- 
+  text-align: left;
   inset:0;
   background:url("images/section3.png") center/cover no-repeat;
   padding: 5%;
@@ -406,6 +406,7 @@ color:#fff9e2;
 
 /* Section 5 styling */
 .section5 {
+  text-align: left;
   padding-right: 10%;
   padding-left: 10%;
   font-size: clamp(16px, 2.5vw, 20px);
