@@ -1,15 +1,7 @@
-/* =========================
-   FORCE UNLOCK ALL CARDS
-========================= */
-
-const REQUIRED = ["1","2","3","4","5","6"];
-const FORCE_UNLOCK = ["1","2","3","4","5","6","7"];
+const REQUIRED = ["1", "2", "3", "4", "5", "6"];
+const FORCE_UNLOCK = ["1", "2", "3", "4", "5", "6", "7"];
 
 localStorage.setItem("visitedPages", JSON.stringify(FORCE_UNLOCK));
-
-/* =========================
-   PRELOADER WITH SOCCER BALL
-========================= */
 
 function fadeOutPreloader() {
   const preloader = document.getElementById("preloader");
@@ -30,10 +22,6 @@ function waitForImagesToLoad(CARD_IMAGES, MENU_IMAGES) {
 
   return Promise.all(promises);
 }
-
-/* =========================
-   IMAGE SYSTEM
-========================= */
 
 function applyImageWhenReady(el, src, isBg = false) {
 
@@ -61,10 +49,6 @@ function applyImageWhenReady(el, src, isBg = false) {
   });
 
 }
-
-/* =========================
-   IMAGE PRELOAD
-========================= */
 
 function preloadImage(src) {
   const img = new Image();
@@ -96,39 +80,28 @@ function lazyLoadImages() {
 
 }
 
-/* =========================
-   CARD + MENU IMAGES
-========================= */
-
 const CARD_IMAGES = {
- "1": "images/Goalkeeping no text.webp",
- "2": "images/Workteam Card no text.webp",
- "5": "images/Close Contol Card no text.webp",
- "4": "images/Free Kick Card no text.webp",
- "3": "images/Assisting Card no text.webp",
- "6": "images/Giant Killer no text.webp"
+  "1": "images/Goalkeeping no text.webp",
+  "2": "images/Workteam Card no text.webp",
+  "5": "images/Close Contol Card no text.webp",
+  "4": "images/Free Kick Card no text.webp",
+  "3": "images/Assisting Card no text.webp",
+  "6": "images/Giant Killer no text.webp"
 };
 
 const MENU_IMAGES = {
- "1": "images/Goalkeeping.webp",
- "2": "images/Workteam Card.webp",
- "5": "images/Close Contol Card.webp",
- "4": "images/Free Kick Card.webp",
- "3": "images/Assisting Card.webp",
- "6": "images/Giant Killer.webp"
+  "1": "images/Goalkeeping.webp",
+  "2": "images/Workteam Card.webp",
+  "5": "images/Close Contol Card.webp",
+  "4": "images/Free Kick Card.webp",
+  "3": "images/Assisting Card.webp",
+  "6": "images/Giant Killer.webp"
 };
 
-/* =========================
-   STORAGE
-========================= */
 
 function getVisited() {
   return JSON.parse(localStorage.getItem("visitedPages")) || [];
 }
-
-/* =========================
-   PROGRESS
-========================= */
 
 function getProgress() {
 
@@ -143,10 +116,6 @@ function getProgress() {
 
 }
 
-/* =========================
-   MAIN INIT
-========================= */
-
 document.addEventListener("DOMContentLoaded", () => {
 
   const visited = getVisited();
@@ -157,9 +126,6 @@ document.addEventListener("DOMContentLoaded", () => {
     fadeOutPreloader();
   });
 
-  /* -------------------------
-     PROGRESS PANEL
-  ------------------------- */
 
   const progressPanel = document.getElementById("progress-panel");
   const progressFill = document.getElementById("progress-bar-fill");
@@ -173,10 +139,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (soccerBall)
     soccerBall.style.left = `${progress.percent}%`;
-
-  /* -------------------------
-     FINAL OVERLAY
-  ------------------------- */
 
   const finalOverlay = document.getElementById("final-overlay");
   const goFinalBtn = document.getElementById("go-final-card");
@@ -209,9 +171,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-  /* -------------------------
-     CARD SLOTS
-  ------------------------- */
 
   document.querySelectorAll(".card-slot").forEach(slot => {
 
@@ -227,9 +186,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   });
 
-  /* -------------------------
-     MENU BUTTONS
-  ------------------------- */
 
   document.querySelectorAll(".menu-btn").forEach(btn => {
 
@@ -255,10 +211,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
   });
-
-  /* -------------------------
-     PARALLAX
-  ------------------------- */
 
   const parallaxContainer = document.querySelector(".parallax-layers");
 
@@ -286,10 +238,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }, { passive: true });
 
   }
-
-  /* -------------------------
-     LAZY LOAD
-  ------------------------- */
 
   requestIdleCallback(() => {
     lazyLoadImages();

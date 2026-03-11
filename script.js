@@ -1,7 +1,3 @@
-/* =========================
-   PRELOADER WITH SOCCER BALL
-========================= */
-
 function fadeOutPreloader() {
   const preloader = document.getElementById("preloader");
   if (!preloader) return;
@@ -12,7 +8,6 @@ function fadeOutPreloader() {
 function waitForImagesToLoad(CARD_IMAGES, MENU_IMAGES, visited) {
   const imagesToLoad = [];
 
-  // Only preload visited cards and menu images
   visited.forEach(id => {
     if (CARD_IMAGES[id]) imagesToLoad.push(CARD_IMAGES[id]);
     if (MENU_IMAGES[id]) imagesToLoad.push(MENU_IMAGES[id]);
@@ -21,7 +16,7 @@ function waitForImagesToLoad(CARD_IMAGES, MENU_IMAGES, visited) {
   const promises = imagesToLoad.map(src => {
     const img = new Image();
     img.src = src;
-    return img.decode().catch(() => true); // ignore errors
+    return img.decode().catch(() => true);
   });
 
   return Promise.all(promises);
@@ -34,10 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
     fadeOutPreloader();
   });
 });
-
-/* =========================
-   FAST IMAGE APPLY
-========================= */
 
 function applyImageWhenReady(el, src, isBg = false) {
   if (!src) return;
@@ -60,16 +51,11 @@ function applyImageWhenReady(el, src, isBg = false) {
   });
 }
 
-/* =========================
-   SMART WEBP LOADER
-========================= */
-
 function preloadImage(src) {
   if (!src) return;
   const img = new Image();
   img.src = src;
 }
-
 function lazyLoadImages() {
   const imgs = document.querySelectorAll("img[data-src]");
   const observer = new IntersectionObserver(entries => {
@@ -109,14 +95,10 @@ function initWebPLoader(visited, CARD_IMAGES, MENU_IMAGES) {
   });
 }
 
-/* =========================
-   SHARED PROGRESS CORE
-========================= */
-
-const REQUIRED = ["1","2","3","4","5","6"];
+const REQUIRED = ["1", "2", "3", "4", "5", "6"];
 
 const CARD_IMAGES = {
- "1": "images/Goalkeeping no text.webp",
+  "1": "images/Goalkeeping no text.webp",
   "2": "images/Workteam Card no text.webp",
   "5": "images/Close Contol Card no text.webp",
   "4": "images/Free Kick Card no text.webp",
@@ -159,10 +141,6 @@ function getProgress() {
   };
 }
 
-/* =========================
-   MAIN INIT
-========================= */
-
 document.addEventListener("DOMContentLoaded", () => {
 
   const CURRENT_PAGE = document.body.dataset.page;
@@ -171,10 +149,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const visited = getVisited();
   const progress = getProgress();
-
-  /* -------------------------
-     PROGRESS PANEL
-  ------------------------- */
   const progressPanel = document.getElementById("progress-panel");
   const progressFill = document.getElementById("progress-bar-fill");
   const soccerBall = document.getElementById("soccer-ball");
@@ -187,30 +161,27 @@ document.addEventListener("DOMContentLoaded", () => {
   if (soccerBall) soccerBall.style.left = `${progress.percent}%`;
 
   const finalOverlay = document.getElementById("final-overlay");
-const goFinalBtn = document.getElementById("go-final-card");
+  const goFinalBtn = document.getElementById("go-final-card");
 
-if (progress.completed === REQUIRED.length) {
+  if (progress.completed === REQUIRED.length) {
 
-  finalOverlay.style.display = "block";
+    finalOverlay.style.display = "block";
 
-  goFinalBtn.addEventListener("click", () => {
+    goFinalBtn.addEventListener("click", () => {
 
-    const target = document.getElementById("final-section");
+      const target = document.getElementById("final-section");
 
-    if (target) {
-      finalOverlay.style.display = "none";
-      target.scrollIntoView({ behavior: "smooth" });
-    } else {
-      window.location.href = "index.html#final-section";
-    }
+      if (target) {
+        finalOverlay.style.display = "none";
+        target.scrollIntoView({ behavior: "smooth" });
+      } else {
+        window.location.href = "index.html#final-section";
+      }
 
-  });
+    });
 
-}
+  }
 
-  /* -------------------------
-     CARD SLOTS
-  ------------------------- */
   document.querySelectorAll(".card-slot").forEach(slot => {
     const id = slot.dataset.card;
     if (visited.includes(id) && CARD_IMAGES[id]) {
@@ -222,9 +193,7 @@ if (progress.completed === REQUIRED.length) {
     }
   });
 
-  /* -------------------------
-     MENU BUTTONS
-  ------------------------- */
+
   document.querySelectorAll(".menu-btn").forEach(btn => {
     const id = btn.dataset.id;
 
@@ -244,15 +213,11 @@ if (progress.completed === REQUIRED.length) {
     });
   });
 
-  /* -------------------------
-     FINAL UNLOCK
-  ------------------------- */
+
   const button7 = document.querySelector('.menu-btn[data-id="7"]');
   if (button7 && progress.completed === REQUIRED.length) button7.classList.remove("locked");
 
-  /* -------------------------
-     PARALLAX + IDLE
-  ------------------------- */
+
   const parallaxContainer = document.querySelector(".parallax-layers");
   if (parallaxContainer) {
     const layers = [
@@ -287,10 +252,6 @@ if (progress.completed === REQUIRED.length) {
     requestAnimationFrame(animate);
   }
 
-  
-  /* -------------------------
-     LAZY LOAD + PRELOAD
-  ------------------------- */
   if (typeof initWebPLoader === "function") {
     requestIdleCallback(() => initWebPLoader(visited, CARD_IMAGES, MENU_IMAGES));
   }
