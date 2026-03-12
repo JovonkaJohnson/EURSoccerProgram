@@ -248,3 +248,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 });
+
+function getVisited() {
+  let visited = JSON.parse(localStorage.getItem("visitedPages")) || [];
+
+  // Remove duplicates and invalid IDs
+  visited = [...new Set(visited)].filter(id => REQUIRED.includes(id));
+
+  localStorage.setItem("visitedPages", JSON.stringify(visited));
+
+  return visited;
+}
