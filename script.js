@@ -168,16 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
     finalOverlay.style.display = "block";
 
     goFinalBtn.addEventListener("click", () => {
-
-      const target = document.getElementById("final-section");
-
-      if (target) {
-        finalOverlay.style.display = "none";
-        target.scrollIntoView({ behavior: "smooth" });
-      } else {
-        window.location.href = "index.html#final-section";
-      }
-
+      window.location.href = "page7.html";
     });
 
   }
